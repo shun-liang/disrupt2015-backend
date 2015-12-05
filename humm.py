@@ -6,7 +6,8 @@ def find_authorzation_token(client_id,client_secret,grant_type):
     response=unirest.post('https://api.myhumm.com/token', 
             params ={'client_id':client_id,
             'client_secret':client_secret,
-            'grant_type':grant_type})  
+            'grant_type':grant_type}) 
+    print response.body['data_response']['access_token'] 
     return response.body['data_response']['access_token']
 
 def find_artist_id(authorzation_token,artist):
