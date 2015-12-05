@@ -28,7 +28,7 @@ def hello_monkey():
 	elif(top_songs == 'error: top list not found'):
 		resp.message("Top songs not available")
 	else: 
-		resp.message("Music added")
+		resp.message("Music added. Hurray!")
 		return jsonify(top_songs)
 
 	return jsonify({})
