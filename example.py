@@ -21,7 +21,7 @@ def hello_monkey():
 
     at = humm.find_authorzation_token(client_id,client_secret,grant_type)
 
-    top_songs = top_songs_request(at, msg_body)
+    top_songs = humm.top_songs_request(at, msg_body)
 
     resp = twilio.twiml.Response()
 
