@@ -9,6 +9,7 @@
     <link href="{{ url_for('static',
     filename='node_modules/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/newhummplayer.js')}}"></script>
   </head>
   <body>
     <div class="container-fluid">
@@ -19,9 +20,9 @@
 
           <div class="row placeholders">
             <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
-                allowfullscreen></iframe>
+              <div id="player1" class="embed-responsive-item"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" >
+              </div>
             </div>
           </div>
 
@@ -39,7 +40,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>7</td>
+                  <td>1</td>
                   <td class="col-md-2">Shake it off - Taylor Swift</td>
                   <td>
                     <button type="button" id="testBtn" class="btn btn-success
