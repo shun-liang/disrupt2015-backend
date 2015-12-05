@@ -4,12 +4,12 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 def find_authorzation_token(client_id,client_secret,grant_type):
 
-    print "client_id: " + client_id + " client_secret:" + client_secret + " grant_type: " + grant_type
+    #print "client_id: " + client_id + " client_secret:" + client_secret + " grant_type: " + grant_type
     response=unirest.post('https://api.myhumm.com/token', 
             params ={'client_id':client_id,
             'client_secret':client_secret,
             'grant_type':grant_type}) 
-    print response.body['data_response']['access_token']
+    #print response.body['data_response']['access_token']
     return response.body['data_response']['access_token']
 
 def find_artist_id(authorzation_token,artist):
@@ -52,6 +52,7 @@ def top_songs_request(authorzation_token,message):
         artist_id=find_artist_id(authorzation_token,message)
         if artist_id != 'artist_not_found':
             top_songs = find_top_songs(authorzation_token,artist_id)
+            print "top_songs: %s" % top_songs
             return top_songs
 
             if top_songs == 'top list not found':
