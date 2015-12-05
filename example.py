@@ -32,3 +32,6 @@ def hello_monkey():
 		return jsonify(top_songs)
 
 	return jsonify({})
+
+if __name__ == '__main__':
+    app.run(debug=True)
