@@ -14,8 +14,8 @@ def hello_monkey():
     msg_body = request.values.get('Body', None)
     msg_from = request.values.get('From', None)
 
-    client_id = '5663510cae8c502d4f8b456a'
-    client_secret = 'ba9488a4ea2efcc0fef6d4ba71888ad29e8cfd616c94db77a47343879fccedab'
+    client_id = '5662fe97ae8c50fb338b4567'
+    client_secret = '903210cdd2cc74e4b2660d372c6d734f8d95e814069314d1c3cb784579ec5f7c'
     grant_type = 'client_credentials'
 
 
