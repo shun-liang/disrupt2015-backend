@@ -1,5 +1,7 @@
 import unirest
 
+
+
 def find_authorzation_token(client_id,client_secret,grant_type):
     response=unirest.post('https://api.myhumm.com/token', 
             params ={'client_id':client_id,
@@ -40,7 +42,6 @@ def find_top_songs(authorzation_token,artist_id):
         return dic
 
         
-authorzation_token=find_authorzation_token(client_id,client_secret,grant_type)
 
 def top_songs_request(authorzation_token,message):
     #function that returns the top songs of an artist

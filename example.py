@@ -16,7 +16,7 @@ def hello_monkey():
     grant_type = 'client_credentials'
 
 
-    at = humm.find_authorzation_token
+    at = humm.find_authorzation_token(client_id,client_secret,grant_type)
 
     top_songs = top_songs_request(at, msg_body)
 
