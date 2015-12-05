@@ -4,7 +4,7 @@ import unirest
 
 def find_authorzation_token(client_id,client_secret,grant_type):
 
-    print "Helllllooooo"
+    print "client_id: " + client_id + " client_secret:" + client_secret + " grant_type: " + grant_type
     response=unirest.post('https://api.myhumm.com/token', 
             params ={'client_id':client_id,
             'client_secret':client_secret,
