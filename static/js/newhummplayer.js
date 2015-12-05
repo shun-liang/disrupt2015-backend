@@ -57,7 +57,7 @@ function initialize()
 function onYouTubeIframeAPIReady() {
         console.log("onYouTubeIframeAPIReady()");
         //queueNext();
-     player = new YT.Player('player', {
+     player = new YT.Player('player1', {
           height: '480',
           width: '600',
           events: {
@@ -178,6 +178,29 @@ function addSongs(data)
 
 function updateTable()
 {
+    var tableBody = document.getElementById("song-table");
+    if(tableBody!==null && queued !== null)
+    {
+        var newBody = "";
+        //Add the queued item
+        var rowHTML = "<tr>";
+            rowHTML += '<td> Next </td><td class="col-md-2">' + queued.title + "</td>" + "<td>" + "button" + "<td>" + "<td> name </td>" + "<td> time</td>";
+            rowHTML += "</tr>";
+            newBody += rowHTML;
+            
+        for(var i = 0, len = playlist.length; i < len; i+=1)
+        {
+            console.log("html loop");
+            rowHTML = "<tr>";
+            rowHTML += "<td>" + i+1 + '</td><td class="col-md-2">' + playlist[i].title + "</td>" + "<td>" + "button" + "<td>" + "<td> name </td>" + "<td> time</td>";
+            rowHTML += "</tr>";
+            newBody += rowHTML;
+        }
+        console.log(newBody);
+        tableBody.innerHTML = newBody;
+    } else {
+        console.log("unable to find table!!!! fml..");
+    }
     
 }
 
@@ -189,6 +212,7 @@ function playNext()
     //queue next
     player.loadVideoById(queued.videoId);
     queueNext();
+    updateTable();
 }
 
 // load next in line
