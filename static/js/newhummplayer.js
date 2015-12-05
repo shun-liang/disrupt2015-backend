@@ -213,7 +213,6 @@ function playNext()
     //queue next
     player.loadVideoById(queued.videoId);
     queueNext();
-    updateTable();
 }
 
 // load next in line
@@ -221,8 +220,6 @@ function playNext()
 function queueNext()
 {
     console.log("queueNext()");
-    
-    var currentHighest = 0;
     
     if (playlist.length > 0) {
         //change to get the highest rated current item in the playlist
@@ -232,6 +229,7 @@ function queueNext()
         played.push(queued);
         playlist.shift();
     }
+    updateTable();
 }
 
 function updateList()
