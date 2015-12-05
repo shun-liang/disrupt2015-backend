@@ -1,6 +1,6 @@
 var newHumm = newHumm || {};
 
-var playlist =  [{  UserID : 383, 
+var playlistRaw =  [{  UserID : 383, 
                             source: "https://www.youtube.com/watch?v=0FdYTrEujZg",
                             videoId: "0FdYTrEujZg", 
                             votes: 2,
@@ -10,6 +10,7 @@ var playlist =  [{  UserID : 383,
                             videoId: "VMnPX3GeyEM", 
                             votes: 2,
                             timestamp: "2015-04-24T00:01:43.511Z" }];
+var playlist = [];
                             
 var queued;
         
@@ -102,3 +103,14 @@ function queueNext()
                                 timestamp: next.timestamp };    
     }
 }
+
+function updateList()
+{
+    var l = playlist.length;
+    for(var i; i < l; i+= 1)
+    {
+        var song = {};
+    }
+}
+
+
