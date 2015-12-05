@@ -27,15 +27,18 @@ def hello_monkey():
 
     if(top_songs == 'error: artist_not_found'):
         resp.message("Artist not in repository")
+        return str(resp)
 
     elif(top_songs == 'error: top list not found'):
         resp.message("Top songs not available")
+        return str(resp)
     else: 
         print "top_songs part 2: %s" % top_songs
         resp.message("Music added. Hurray!")
-        #return jsonify(top_songs)
+        return str(resp)
+        return jsonify(top_songs)
 
-    #return jsonify({})
+    return jsonify({})
 
 if __name__ == '__main__':
     app.run(debug=True)
