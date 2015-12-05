@@ -1,0 +1,31 @@
+html, body
+{
+	width:100%;
+	height:100%;
+}
+#playersContainer
+{
+	width:600px;
+	height:320px;
+	background-color:grey;
+	position:relative;
+}
+.mainPlayer
+{
+	width:480px;
+	height:270px;
+	position:absolute;
+	background-color:blue;
+	margin:0 auto;
+	left:0;
+	top:0;
+}
+
+.secondPlayer
+{
+	width:160px;
+	height:107px;
+	position:absolute;
+	left:500px;
+	bottom:0;
+}
