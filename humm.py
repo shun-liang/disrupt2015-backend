@@ -39,12 +39,12 @@ def find_top_songs(authorzation_token,artist_id):
         dic = {first_name: youtube_first_link, second_name: youtube_second_link, third_name: youtube_third_link}
         return dic
 
-		
+        
 authorzation_token=find_authorzation_token(client_id,client_secret,grant_type)
 
 def top_songs_request(authorzation_token,message):
     #function that returns the top songs of an artist
-	try:
+    try:
         artist_id=find_artist_id(authorzation_token,message)
         if artist_id != 'artist_not_found':
             top_songs = find_top_songs(authorzation_token,artist_id)
