@@ -58,7 +58,7 @@ function initialize()
 function onYouTubeIframeAPIReady() {
         console.log("onYouTubeIframeAPIReady()");
         //queueNext();
-     player = new YT.Player('player', {
+     player = new YT.Player('player1', {
           height: '480',
           width: '600',
           events: {
