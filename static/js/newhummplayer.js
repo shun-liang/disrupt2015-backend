@@ -15,6 +15,7 @@ var playlistRaw =  [{  UserID : 383,
                             videoId: "VMnPX3GeyEM", 
                             votes: 1,
                             timestamp: "2015-04-24T00:01:43.511Z" }];
+var playlist = [];
 
 //playlist 
 var playlist = [];     
@@ -232,3 +233,14 @@ function queueNext()
         playlist.shift();
     }
 }
+
+function updateList()
+{
+    var l = playlist.length;
+    for(var i; i < l; i+= 1)
+    {
+        var song = {};
+    }
+}
+
+

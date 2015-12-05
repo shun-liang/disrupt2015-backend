@@ -10,6 +10,8 @@
     filename='node_modules/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/newhummplayer.js')}}"></script>
+    <script src="{{ url_for('static',
+      filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
   </head>
   <body>
     <div class="container-fluid">
@@ -38,7 +40,7 @@
                   <th>Submit time</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="song-table">
                 <tr>
                   <td>1</td>
                   <td class="col-md-2">Shake it off - Taylor Swift</td>
