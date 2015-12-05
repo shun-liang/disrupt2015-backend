@@ -2,8 +2,11 @@ import humm
 from flask import Flask, request, redirect
 import twilio.twiml
 import json
+import sys
+import logging
 app = Flask(__name__)
-
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 @app.route("/", methods = ['GET', 'POST'])
 
