@@ -1,6 +1,6 @@
 import unirest
-
-
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 def find_authorzation_token(client_id,client_secret,grant_type):
 
