@@ -3,17 +3,17 @@ var loaded = false;
 var playlistRaw =  [{  UserID : 383, 
                             source: "https://www.youtube.com/watch?v=0FdYTrEujZg",
                             videoId: "0FdYTrEujZg", 
-                            votes: 2,
+                            vote: 2,
                             timestamp: "2015-04-23T23:59:43.511Z" },
                     {  UserID : 389, 
                             source: "https://www.youtube.com/watch?v=DLzxrzFCyOs",
                             videoId: "DLzxrzFCyOs", 
-                            votes: 7,
+                            vote: 7,
                             timestamp: "2015-04-23T23:59:43.511Z" },
                      {  UserID : 323, 
                             source: "https://www.youtube.com/watch?v=VMnPX3GeyEM",
                             videoId: "VMnPX3GeyEM", 
-                            votes: 1,
+                            vote: 1,
                             timestamp: "2015-04-24T00:01:43.511Z" }];
 //playlist 
 var playlist = [];
@@ -37,6 +37,8 @@ var currentPlayer;
 var nextPlayer;
 
 var currentTimeLeft = 0;
+var nextVideoLoaded = false;
+var playlistLoaded = false;
                  
 // onload
 window.addEventListener("load",function load(event){
@@ -97,7 +99,7 @@ function onPlayer1StateChange(event)
     console.log("player1 state changed");
     //console.dir(event);
     if (event.data === 0){
-        playNext();
+        player1.clearVideo();
     }
 }
 
@@ -112,7 +114,8 @@ function onPlayer2StateChange(event)
 {
     console.log("player2 state changed");
     if (event.data === 0){
-        playNext();
+       //unload
+        player2.clearVideo();
     }
 }
 
@@ -120,7 +123,7 @@ function onPlayer2StateChange(event)
 // load raw playlist from server
 function loadPlaylistRaw()
 {
-    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songsss";
+    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songs";
     $.ajax({
         url: callUrl,
         context: document.body
@@ -141,6 +144,7 @@ function loadPlaylistRaw()
 function convertPlaylist()
 {
     console.log("convertPlaylist()");
+    playlistLoaded = true;
     var videoIds = "";
     playlist = [];
     console.log("playlistRaw.length:" + playlistRaw.length);
@@ -187,28 +191,28 @@ function addSongs(data)
     playlist = [];
     for(var i=data.items.length; i > 0; i-=1)
     {
-        console.dir(data);
+        //console.dir(data);
         //find the video in the rawplaylist to extract votes
         var voteResults =  $.grep(playlistRaw,function(e){ return e.videoId == playlistRaw[i-1].videoId;});
         var vidVotes = 0;
         for(var k = voteResults.length; k > 0; k-=1)
         {
-            vidVotes += voteResults[k-1].votes;
+            vidVotes += voteResults[k-1].vote;
         }
         
         var vid = data.items[i-1];
         var len = convert_time(vid.contentDetails.duration);
-        var newSong = {videoId: vid.id, title : vid.snippet.title, thumbnail : vid.snippet.thumbnails.default.url, votes: vidVotes, duration: len };
-        console.dir(newSong);
+        var newSong = {videoId: vid.id, title : vid.snippet.title, thumbnail : vid.snippet.thumbnails.default.url, vote: vidVotes, duration: len };
+        //console.dir(newSong);
         playlist.push(newSong);
     }
     
     console.log("playlist length:" +  playlist.length);
     // sort by votes
     playlist.sort(function(a,b){
-        if(a.votes > b.votes){
+        if(a.vote > b.vote){
             return -1;
-        } else if(a.votes < b.votes)
+        } else if(a.vote < b.vote)
         {
             return 1;
         } else {
@@ -233,10 +237,15 @@ function updateTable()
     if(tableBody!==null && queued !== null)
     {
         var newBody = "";
-        //Add the queued item
-        if(queued !== undefined && queued !== null){
+        //Add the queued item 
+        // REMOVE && FALSE TO REENABLE
+        if(queued !== undefined && queued !== null && false){
             var rowHTML = "<tr>";
-            rowHTML += '<td> Next </td><td class="col-md-2">' + queued.title + "</td>" + "<td>" + "button" + "<td>" + "<td> name </td>" + "<td> time</td>";
+            //rowHTML += '<td "col-md-1"> Next </td>';
+            rowHTML += '<td class="col-md-6">' + queued.title + "</td>";  
+            rowHTML += '<td>' + '<button type="button" id="testBtn" class="btn btn-success glyphicon glyphicon-thumbs-up" data-loading-text=" ... ">';
+            rowHTML += queued.vote;
+            rowHTML += '</button>' + "</td>";
             rowHTML += "</tr>";
             newBody += rowHTML;
         }
@@ -245,7 +254,12 @@ function updateTable()
         {
             //console.log("html loop");
             rowHTML = "<tr>";
-            rowHTML += "<td>" + i+1 + '</td><td class="col-md-2">' + playlist[i].title + "</td>" + "<td>" + "button" + "<td>" + "<td> name </td>" + "<td> time</td>";
+            //rowHTML += '<td class="col-md-1">' + i + '</td>';
+            rowHTML += '<td class="table-image-cell"> <img src="' + playlist[i].thumbnail + '" width:120 height:80 /></td>';
+            rowHTML += '<td class="table-title-cell"> <h5>' + playlist[i].title + "</h5></td>";  
+            rowHTML += '<td class="table-votes-cell">' + '<button type="button" id="testBtn" class="btn btn-success glyphicon glyphicon-thumbs-up" data-loading-text=" ... ">';
+            rowHTML += playlist[i].vote;
+            rowHTML += '</button>' + "</td>";
             rowHTML += "</tr>";
             newBody += rowHTML;
         }
@@ -283,15 +297,11 @@ function playNext()
         el_player1.removeClass("secondPlayer");
         el_player2.addClass("secondPlayer");
         el_player2.removeClass("mainPlayer");
-        
     }
     
     currentPlayer.playVideo();
     current = queued;
-    
-    
-    
-    queueNext();
+    nextVideoLoaded = false;
 }
 
 // load next in line
@@ -307,8 +317,7 @@ function queueNext()
         playlist.shift();
         //load in next player
         nextPlayer.cueVideoById(queued.videoId);
-        //player1.loadVideoById(queued.videoId);
-        //console.log("queued video loaded");
+        nextVideoLoaded = true;
     } else {
         console.log("playlist length is too short!");
     }
@@ -318,7 +327,7 @@ function queueNext()
 function HummUpdate()
 {
     //initial load
-    if(!initialLoad && player1Ready && player2Ready)
+    if(!initialLoad && player1Ready && player2Ready && playlistLoaded)
     {
         console.log("all players ready. Initial load & play");
         initialLoad = true;
@@ -327,11 +336,15 @@ function HummUpdate()
         //play first video
     }
     
-    if(initialLoad)
+    if(initialLoad && currentPlayer.getPlayerState() === 1 )
     {
         //console.log("Song time: " + currentPlayer.getCurrentTime() + "/" + current.duration);
         currentTimeLeft = current.duration - currentPlayer.getCurrentTime();
-        if(currentTimeLeft<25 && nextPlayer.getPlayerState() != 1){
+        if(currentTimeLeft < 31 && !nextVideoLoaded){
+            queueNext();
+        }
+        if(currentTimeLeft<25 && nextPlayer.getPlayerState() != 1)
+        {
             nextPlayer.playVideo();
         }
         if(currentTimeLeft < 15){

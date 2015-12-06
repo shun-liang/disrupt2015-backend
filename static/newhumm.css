@@ -3,22 +3,37 @@ html, body
 	width:100%;
 	height:100%;
 }
+
+#main-header
+{
+	width:100%;
+	height:40px;
+	background-color: #f1f1f1;
+}
+
 #playersContainer
 {
-	width:740px;
-	height:270px;
-	background-color:grey;
+	width:100%;
+	height:500px;
+	position:relative;
+	background-color:#000;
+}
+#playersInnerContainer
+{
+	width:600px;
+	height:320px;
+	display:block;
+	margin:0 auto;
+	z-index:50;
 	position:relative;
 }
 .mainPlayer
 {
-	width:480px;
-	height:270px;
+	width:100%;
+	height:100%;
 	position:absolute;
-	background-color:blue;
-	margin:0 auto;
-	left:0;
-	top:0;
+	left:0px;
+	bottom:0px;
 	z-index:100;
 	transition: all 5s;
 }
@@ -26,10 +41,105 @@ html, body
 .secondPlayer
 {
 	width:240px;
-	height:185px;
+	height:172px;
 	position:absolute;
-	left: 500px;
-	top:85px;
+	left: 680px;
+	bottom:60px;
 	z-index:80;
 	transition: all 5s;
+}
+.secondPlayer::before
+{
+	content:"Up Next:";
+	font-size:20px;
+	position:absolute;
+	top:-20px;
+	left:0px;
+}
+
+#table-container
+{
+	width:100%;
+	display:block;
+	margin:0 auto;
+	background-color: #222;
+	position:absolute;
+	left:0;
+	top:0;
+}
+
+.myTable > tbody > tr
+{
+	padding: 5px;
+	box-sizing: border-box;
+	height:100px;
+	width:100%;
+}
+.myTable > tbody > tr:nth-child(2n) > td {
+   background-color: #222;
+}
+.myTable > tbody > tr:nth-child(2n+1) > td {
+   background-color: #444;
+}
+
+.table-image-cell
+{
+	width:120px;
+	margin:0 10px;
+}
+.table-title-cell
+{
+	width:200px;
+	padding:10px;
+}
+.table-votes-cell
+{
+	width: 40px;
+	padding:10px;
+}
+
+/**
+* 	NEW LAYOUT
+**/
+
+#main-content
+{
+	display:flex;
+	height:100%;
+	width:100%;
+	min-width:1280px;
+	min-height:650px;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-content: stretch;
+	align-items: stretch;
+}
+#queue-container
+{
+	flex: 0 0 400px;
+	overflow-y:auto;
+	background-color: #222;
+	color:#f1f1f1;
+}
+
+#players-container
+{
+	flex: 1 0 600px;
+	position:relative;
+	background-color:black;
+}
+
+#countdown-container
+{
+	flex:0 0 280px;
+	background-color:#222;
+}
+
+#timer-container
+{
+	width:200px;
+	height:200px;
+	display:block;
+	margin:20px auto;
+	background-color:blue;
 }
