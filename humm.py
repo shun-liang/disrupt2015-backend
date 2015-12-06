@@ -62,4 +62,4 @@ def top_songs_request(authorzation_token,message):
     except:
         print 'find new auth token'
         #authorzation_token=find_authorzation_token(client_id,client_secret,grant_type)
-        return top_songs_request(authorzation_token,message)
+        #return top_songs_request(authorzation_token,message)
