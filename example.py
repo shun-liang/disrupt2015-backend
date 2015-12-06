@@ -2,6 +2,8 @@ import humm
 from flask import Flask, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask.ext.cors import CORS
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 import twilio.twiml
 import json
 import sys
@@ -15,6 +17,10 @@ app.logger.setLevel(logging.ERROR)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 class Song(db.Model):
     song_id = db.Column(db.String(20), primary_key=True)
