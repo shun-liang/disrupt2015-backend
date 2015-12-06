@@ -13,7 +13,7 @@ def find_authorzation_token(client_id,client_secret,grant_type):
     return response.body['data_response']['access_token']
 
 def find_artist_id(authorzation_token,artist):
-    string="https://humm-api.p.mashape.com/artists?auth="+authorzation_token+"&keyword="+artist
+    string="https://humm-api.p.mashape.com/artists?auth="+authorzation_token+"&keyword="+artist+'&limit=1'
     response = unirest.get(string,
                            headers={
                                     "X-Mashape-Key": "m78ha7jd57msh8cdt9qLh4maGu8dp1DhHlljsnzcpHjUoYYnLJ",
@@ -25,7 +25,7 @@ def find_artist_id(authorzation_token,artist):
         return response.body['data_response'][0]['_id']
 
 def find_top_songs(authorzation_token,artist_id):
-    string='https://humm-api.p.mashape.com/artists/'+artist_id+'/topsongs?auth='+authorzation_token
+    string='https://humm-api.p.mashape.com/artists/'+artist_id+'/topsongs?auth='+authorzation_token+'&limit=3'
     
     response = unirest.get(string,
                            headers={
@@ -53,11 +53,11 @@ def top_songs_request(authorzation_token,message):
     artist_id=find_artist_id(authorzation_token,message)
     if artist_id != 'artist_not_found':
         top_songs = find_top_songs(authorzation_token,artist_id)
-        print "top_songs: %s" % top_songs
-        return top_songs
 
         if top_songs == 'error: top list not found':
             return 'error: top list not found'
+        else:
+            return top_songs
     else:
         return 'error: artist_not_found'
     #except Exception, e:
