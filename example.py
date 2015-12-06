@@ -88,7 +88,7 @@ def all_songs():
     top_songs = humm.top_songs_request(at, "madonna")
     top_songs_serialized = []
     # for song_name in top_songs.keys():
-    for song in Song.query.all()
+    for song in Song.query.all():
         song_name = song.name
         video_id = song.song_id
         vote = song.vote
