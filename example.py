@@ -16,7 +16,7 @@ app.logger.setLevel(logging.ERROR)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
 
-class song(db.Model):
+class Song(db.Model):
     song_id = db.Column(db.String(20), primary_key=True)
     name = db.Column(db.String(80))
     vote = db.Column(db.Integer)
