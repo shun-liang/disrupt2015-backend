@@ -68,7 +68,7 @@ function initialize()
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     
     //load the timer div
-    d3Timer = radialProgress(document.getElementById('timer-container')).label("Count Down").diameter(200).value(120).render();
+    d3Timer = radialProgress(document.getElementById('timer-container')).label("Count Down").diameter(200).value(0).render();
 }
 
 function onYouTubeIframeAPIReady() {
@@ -164,7 +164,7 @@ function convertPlaylist()
         if(result.length > 0)
         {
             console.log("video has been played");
-            return;
+            continue;
         }
         
         //add comma if not first item to videoIds string
@@ -194,7 +194,7 @@ function convertPlaylist()
 
 function addSongs(data)
 {
-    //console.dir(data);
+    console.dir(data);
     console.log("addSongs(): " + data.items.length);
     playlist = [];
     for(var i=data.items.length; i > 0; i-=1)
@@ -324,8 +324,8 @@ function queueNext()
         played.push(queued);
         playlist.shift();
         //load in next player
-        nextPlayer.cueVideoById(queued.videoId);
         nextVideoLoaded = true;
+        nextPlayer.cueVideoById(queued.videoId);
     } else {
         console.log("playlist length is too short!");
     }
@@ -350,12 +350,22 @@ function HummUpdate()
         //console.log("Song time: " + currentPlayer.getCurrentTime() + "/" + current.duration);
         currentTimeLeft = current.duration - currentPlayer.getCurrentTime();
         d3Timer.value(currentTimeLeft).render();
-        if(currentTimeLeft < 31 && !nextVideoLoaded){
+        
+        if(currentTimeLeft < 31 && nextVideoLoaded===false)
+        {
+            console.log("loading next song due as approaching end");
             queueNext();
         }
-        if(currentTimeLeft<25 && nextPlayer.getPlayerState() != 1)
+        
+        if(currentTimeLeft<25 && currentTimeLeft > 5)
         {
-            nextPlayer.playVideo();
+            if(nextPlayer.getPlayerState()!=1){
+             nextPlayer.playVideo();
+            }
+            var cv = (currentTimeLeft/25)*100;
+            currentPlayer.setVolume(cv);
+            nextPlayer.setVolume(100-cv);
+            //modify volumne
         }
         if(currentTimeLeft < 15){
             //swap players
