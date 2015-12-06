@@ -20,7 +20,7 @@ def find_artist_id(authorzation_token,artist):
                                     "Accept": "application/json"})
     
     if response.body['data_response']==[]:
-        return 'artist_not_found'
+        return 'error: artist_not_found'
     else:
         return response.body['data_response'][0]['_id']
 
@@ -33,7 +33,7 @@ def find_top_songs(authorzation_token,artist_id):
                                     "Accept": "application/json"})
     
     if response.code == 204:
-        return 'top list not found'
+        return 'error: top list not found'
     else:
         youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
         first_name = response.body['data_response'][0]['title']
@@ -55,7 +55,7 @@ def top_songs_request(authorzation_token,message):
             print "top_songs: %s" % top_songs
             return top_songs
 
-            if top_songs == 'top list not found':
+            if top_songs == 'error: top list not found':
                 return 'error: top list not found'
         else:
             return 'error: artist_not_found'
