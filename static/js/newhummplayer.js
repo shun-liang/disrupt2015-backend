@@ -134,7 +134,7 @@ function onPlayer2StateChange(event)
 // load raw playlist from server
 function loadPlaylistRaw()
 {
-    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songss";
+    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songs";
     $.ajax({
         url: callUrl,
         context: document.body
