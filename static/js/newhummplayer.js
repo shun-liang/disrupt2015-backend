@@ -2,17 +2,20 @@ var newHumm = newHumm || {};
 var loaded = false;
 var playlistRaw =  [{  UserID : 383, 
                             source: "https://www.youtube.com/watch?v=0FdYTrEujZg",
-                            videoId: "0FdYTrEujZg", 
+                            videoId: "0FdYTrEujZg",
+                            id: "0FdYTrEujZg",
                             vote: 2,
                             timestamp: "2015-04-23T23:59:43.511Z" },
                     {  UserID : 389, 
                             source: "https://www.youtube.com/watch?v=DLzxrzFCyOs",
                             videoId: "DLzxrzFCyOs", 
+                            id: "DLzxrzFCyOs",
                             vote: 7,
                             timestamp: "2015-04-23T23:59:43.511Z" },
                      {  UserID : 323, 
                             source: "https://www.youtube.com/watch?v=VMnPX3GeyEM",
                             videoId: "VMnPX3GeyEM", 
+                            id: "VMnPX3GeyEM",
                             vote: 5,
                             timestamp: "2015-04-24T00:01:43.511Z" }];
 //playlist 
@@ -131,14 +134,15 @@ function onPlayer2StateChange(event)
 // load raw playlist from server
 function loadPlaylistRaw()
 {
-    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songs";
+    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songss";
     $.ajax({
         url: callUrl,
         context: document.body
         }).done(function(data, status) {
             console.log("raw playlist data returned with status: " + status);
             playlistRaw = data.playlist;
-            console.dir(playlistRaw);
+            //console.dir(playlistRaw);
+            
             convertPlaylist();
         }).fail(function(data){
             //convert playlist anyway since one exists
@@ -158,6 +162,7 @@ function convertPlaylist()
     console.log("playlistRaw.length:" + playlistRaw.length);
     for(var i = playlistRaw.length; i > 0; i-=1 )
     {
+        //add the id & videoId
         //console.log("covertPlaylisT() forloop");
         //check if item has been played. if it has return
         var result =  $.grep(played,function(e){ return e.videoId === playlistRaw[i-1].id});
@@ -199,6 +204,8 @@ function addSongs(data)
     playlist = [];
     for(var i=data.items.length; i > 0; i-=1)
     {
+        //makesure videoId exists
+        data.items[i-1].videoId = data.items[i-1].id;
         //console.dir(data);
         //find the video in the rawplaylist to extract votes
         //var voteResults =  $.grep(playlistRaw,function(e){ return e.videoId === playlistRaw[i-1].videoId;});
