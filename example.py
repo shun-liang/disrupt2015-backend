@@ -58,14 +58,14 @@ def all_songs():
         video_id = top_songs[song_name]
         vote = 3
         timestamp = "2015/10/12 12:12:12"
-        json_obj = {
+        song_obj = {
             'song': song_name,
             'video_id': video_id,
             'vote': vote,
             'time': timestamp,
         }
-        top_songs_serialized.append(json_obj)
-    return jsonify({playlist: top_songs_serialized})
+        top_songs_serialized.append(song_obj)
+    return jsonify({'playlist': top_songs_serialized})
 
 
 if __name__ == '__main__':
