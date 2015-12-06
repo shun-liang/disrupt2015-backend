@@ -36,8 +36,8 @@ def find_top_songs(authorzation_token,artist_id):
     if response.code != 200:
         return 'error: top list not found'
     else:
-        print 'data_response: %s' % response.body['data_response']
-        if len(response.body['data_response']) == 3:
+        print 'len(data_response): %s' % len(response.body['data_response'])
+        if len(response.body['data_response']) >= 3:
             youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
             first_name = response.body['data_response'][0]['title']
             youtube_second_link=response.body['data_response'][1]['foreign_ids']['youtube']
