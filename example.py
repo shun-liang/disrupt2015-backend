@@ -53,13 +53,14 @@ def hello_monkey():
 
     top_songs = humm.top_songs_request(at, msg_body)
 
-    for song_name in top_songs.keys():
-        song = Song.query.get(top_songs[song_name])
-        if song:
-            song.vote += 1
-        else:
-            song = Song(top_songs[song_name], song_name, 1, datetime.now())
-            db.session.add(song)
+    if isinstance(top_songs, dict):
+        for song_name in top_songs.keys():
+            song = Song.query.get(top_songs[song_name])
+            if song:
+                song.vote += 1
+            else:
+                song = Song(top_songs[song_name], song_name, 1, datetime.now())
+                db.session.add(song)
     db.session.commit()
 
     resp = twilio.twiml.Response()
