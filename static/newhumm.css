@@ -5,8 +5,8 @@ html, body
 }
 #playersContainer
 {
-	width:600px;
-	height:320px;
+	width:740px;
+	height:270px;
 	background-color:grey;
 	position:relative;
 }
@@ -19,13 +19,15 @@ html, body
 	margin:0 auto;
 	left:0;
 	top:0;
+	transition: all 5s;
 }
 
-.secondPlayer
+.nextPlayer
 {
-	width:160px;
-	height:107px;
+	width:240px;
+	height:185px;
 	position:absolute;
-	left:500px;
+	right: 0px;
 	bottom:0;
+	transition: all 5s;
 }
