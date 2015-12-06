@@ -360,19 +360,21 @@ function HummUpdate()
         //console.log("Song time: " + currentPlayer.getCurrentTime() + "/" + current.duration);
         currentTimeLeft = current.duration - currentPlayer.getCurrentTime();
         d3Timer.value(currentTimeLeft).render();
-        
+        if(currentTimeLeft > 25){
+            currentPlayer.setVolume(100);
+        }
         if(currentTimeLeft < 31 && nextVideoLoaded===false)
         {
             //console.log("loading next song due as approaching end");
             queueNext();
         }
         
-        if(currentTimeLeft<25 && currentTimeLeft > 5)
+        if(currentTimeLeft<25 && currentTimeLeft > 10)
         {
             if(nextPlayer.getPlayerState()!=1){
              nextPlayer.playVideo();
             }
-            var cv = (currentTimeLeft/25)*100;
+            var cv = ((currentTimeLeft-10)/15)*100;
             currentPlayer.setVolume(cv);
             nextPlayer.setVolume(100-cv);
             //modify volumne
