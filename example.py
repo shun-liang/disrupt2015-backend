@@ -29,7 +29,7 @@ class Song(db.Model):
         self.time = time
 
     def __repr__(self):
-        return '<Song %s>' % self.song_name
+        return '<Song %s>' % self.name
 
 
 @app.route("/", methods = ['GET', 'POST'])
