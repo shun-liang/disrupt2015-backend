@@ -36,7 +36,7 @@ def find_top_songs(authorzation_token,artist_id):
     if response.code != 200:
         return 'error: top list not found'
     else:
-        if response.body['data_response'].size() == 3:
+        if len(response.body['data_response']) == 3:
             youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
             first_name = response.body['data_response'][0]['title']
             youtube_second_link=response.body['data_response'][1]['foreign_ids']['youtube']
@@ -45,7 +45,7 @@ def find_top_songs(authorzation_token,artist_id):
             third_name = response.body['data_response'][2]['title']
             dic = {first_name: youtube_first_link, second_name: youtube_second_link, third_name: youtube_third_link}
             return dic
-        if response.body['data_response'].size() == 2:
+        if len(response.body['data_response']) == 2:
             youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
             first_name = response.body['data_response'][0]['title']
             youtube_second_link=response.body['data_response'][1]['foreign_ids']['youtube']
@@ -53,7 +53,7 @@ def find_top_songs(authorzation_token,artist_id):
             dic = {first_name: youtube_first_link, second_name: youtube_second_link}
             return dic
 
-        if response.body['data_response'].size() == 1:
+        if len(response.body['data_response']) == 1:
             youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
             first_name = response.body['data_response'][0]['title']
             dic = {first_name: youtube_first_link}
