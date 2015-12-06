@@ -42,7 +42,9 @@ var currentTimeLeft = 0;
 window.addEventListener("load",function load(event){
     console.log("page loaded");
     initialize();
-    convertPlaylist();
+    // call initial rawplaylist update
+    loadPlaylistRaw();
+    //convertPlaylist();
     window.setInterval(HummUpdate,1000);
 });
 
@@ -56,11 +58,7 @@ function initialize()
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    
-    // call initial rawplaylist update
-    loadPlaylistRaw();
-    
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); 
 }
 
 function onYouTubeIframeAPIReady() {
@@ -97,7 +95,6 @@ function onPlayer1Ready(event, id)
 function onPlayer1StateChange(event)
 {
     console.log("player1 state changed");
-    el_player2 = $('#player2');
     //console.dir(event);
     if (event.data === 0){
         playNext();
@@ -107,6 +104,7 @@ function onPlayer1StateChange(event)
 function onPlayer2Ready(event, id)
 {
     console.log("player2 ready");
+    el_player2 = $('#player2');
     player2Ready = true;
     currentPlayer = player2;
 }
@@ -122,14 +120,18 @@ function onPlayer2StateChange(event)
 // load raw playlist from server
 function loadPlaylistRaw()
 {
-    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songs";
+    var callUrl = "https://shielded-fortress-9407.herokuapp.com/api/all_songsss";
     $.ajax({
         url: callUrl,
         context: document.body
-        }).done(function(data) {
-            console.log("raw playlist data returned");
+        }).done(function(data, status) {
+            console.log("raw playlist data returned with status: " + status);
             playlistRaw = data.playlist;
             console.dir(playlistRaw);
+            convertPlaylist();
+        }).fail(function(data){
+            //convert playlist anyway since one exists
+            console.log("suck it i'm converting anyway");
             convertPlaylist();
         });
     
@@ -160,7 +162,7 @@ function convertPlaylist()
         }
         
         //add video id
-        videoIds += playlistRaw[i-1].video_id;
+        videoIds += playlistRaw[i-1].videoId;
     }
     
     //ajax call to google data api if its not empty
@@ -171,7 +173,7 @@ function convertPlaylist()
         $.ajax({
         url: callUrl,
         context: document.body
-        }).done(function(data) {
+        }).success(function(data) {
             console.log("GData ajax call returned");
             addSongs(data);
         });
@@ -268,19 +270,20 @@ function playNext()
         currentPlayer = player2;
         nextPlayer = player1;
         //swap the css classes
-        //el_player2.addClass("mainPlayer");
-        //el_player2.removeClass("secondPlayer");
-        //el_player1.addClass("secondPlayer");
-        //el_player1.removeClass("mainPlayer");
+        el_player2.addClass("mainPlayer");
+        el_player2.removeClass("secondPlayer");
+        el_player1.addClass("secondPlayer");
+        el_player1.removeClass("mainPlayer");
     } else {
         currentPlayerNumber = 1;
         currentPlayer = player1;
         nextPlayer = player2;
         // swap classes
-        //el_player1.addClass("mainPlayer");
-        //el_player1.removeClass("secondPlayer");
-        //el_player2.addClass("secondPlayer");
-        //el_player2.removeClass("mainPlayer");*/
+        el_player1.addClass("mainPlayer");
+        el_player1.removeClass("secondPlayer");
+        el_player2.addClass("secondPlayer");
+        el_player2.removeClass("mainPlayer");
+        
     }
     
     currentPlayer.playVideo();

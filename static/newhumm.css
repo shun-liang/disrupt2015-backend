@@ -19,15 +19,17 @@ html, body
 	margin:0 auto;
 	left:0;
 	top:0;
+	z-index:100;
 	transition: all 5s;
 }
 
-.nextPlayer
+.secondPlayer
 {
 	width:240px;
 	height:185px;
 	position:absolute;
-	right: 0px;
-	bottom:0;
+	left: 500px;
+	top:85px;
+	z-index:80;
 	transition: all 5s;
 }
