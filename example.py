@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
 
 # class song(db.Model):
@@ -66,7 +67,6 @@ def hello_monkey():
     return jsonify({})
 
 @app.route("/api/all_songs", methods = ['GET'])
-@cross_origin()
 def all_songs():
     msg_body = request.values.get('Body', None)
     msg_from = request.values.get('From', None)
