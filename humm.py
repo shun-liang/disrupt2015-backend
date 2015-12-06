@@ -33,7 +33,7 @@ def find_top_songs(authorzation_token,artist_id):
                                     "Accept": "application/json"})
     
     print "response code: %s" % response.code
-    if response.code == 204:
+    if response.code != 200:
         return 'error: top list not found'
     else:
         youtube_first_link=response.body['data_response'][0]['foreign_ids']['youtube']
