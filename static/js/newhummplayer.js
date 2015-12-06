@@ -13,7 +13,7 @@ var playlistRaw =  [{  UserID : 383,
                      {  UserID : 323, 
                             source: "https://www.youtube.com/watch?v=VMnPX3GeyEM",
                             videoId: "VMnPX3GeyEM", 
-                            vote: 1,
+                            vote: 5,
                             timestamp: "2015-04-24T00:01:43.511Z" }];
 //playlist 
 var playlist = [];
@@ -46,20 +46,20 @@ var lastStatus = 0;
                  
 // onload
 window.addEventListener("load",function load(event){
-    console.log("page loaded");
+    //console.log("page loaded");
     initialize();
     // call initial rawplaylist update
     loadPlaylistRaw();
     //convertPlaylist();
     window.setInterval(HummUpdate,1000);
-    window.setInterval(loadPlaylistRaw,10000);
+    window.setInterval(loadPlaylistRaw,3000);
 });
 
 
 
 function initialize()
 {
-    console.log("initialize()");
+    //console.log("initialize()");
     
     //load the youtube api
     var tag = document.createElement('script');
@@ -72,7 +72,7 @@ function initialize()
 }
 
 function onYouTubeIframeAPIReady() {
-        console.log("onYouTubeIframeAPIReady()");
+        //console.log("onYouTubeIframeAPIReady()");
      player1 = new YT.Player('player1', {
           height: '320',
           width: '480',
@@ -94,7 +94,7 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayer1Ready(event, id)
 {
-    console.log("player1 ready ");
+    //console.log("player1 ready ");
     el_player1 = $('#player1');
     //console.dir(event);
     //player.loadVideoById(queued.videoId);
@@ -104,7 +104,7 @@ function onPlayer1Ready(event, id)
 }
 function onPlayer1StateChange(event)
 {
-    console.log("player1 state changed");
+    //console.log("player1 state changed");
     //console.dir(event);
     if (event.data === 0){
         player1.clearVideo();
@@ -113,14 +113,14 @@ function onPlayer1StateChange(event)
 
 function onPlayer2Ready(event, id)
 {
-    console.log("player2 ready");
+    //console.log("player2 ready");
     el_player2 = $('#player2');
     player2Ready = true;
     currentPlayer = player2;
 }
 function onPlayer2StateChange(event)
 {
-    console.log("player2 state changed");
+    //console.log("player2 state changed");
     if (event.data === 0){
        //unload
         player2.clearVideo();
@@ -142,7 +142,7 @@ function loadPlaylistRaw()
             convertPlaylist();
         }).fail(function(data){
             //convert playlist anyway since one exists
-            console.log("suck it i'm converting anyway");
+            //console.log("suck it i'm converting anyway");
             convertPlaylist();
         });
     
@@ -160,7 +160,7 @@ function convertPlaylist()
     {
         //console.log("covertPlaylisT() forloop");
         //check if item has been played. if it has return
-        var result =  $.grep(played,function(e){ return e.videoId == playlistRaw[i-1].videoId});
+        var result =  $.grep(played,function(e){ return e.videoId === playlistRaw[i-1].id});
         if(result.length > 0)
         {
             console.log("video has been played");
@@ -194,18 +194,21 @@ function convertPlaylist()
 
 function addSongs(data)
 {
-    console.dir(data);
-    console.log("addSongs(): " + data.items.length);
+    //console.dir(data);
+    //console.log("addSongs(): " + data.items.length);
     playlist = [];
     for(var i=data.items.length; i > 0; i-=1)
     {
         //console.dir(data);
         //find the video in the rawplaylist to extract votes
-        var voteResults =  $.grep(playlistRaw,function(e){ return e.videoId == playlistRaw[i-1].videoId;});
+        //var voteResults =  $.grep(playlistRaw,function(e){ return e.videoId === playlistRaw[i-1].videoId;});
         var vidVotes = 0;
-        for(var k = voteResults.length; k > 0; k-=1)
+        for(var p = 0, l = playlistRaw.length; p<l; p+=1)
         {
-            vidVotes += voteResults[k-1].vote;
+            if(playlistRaw[p].videoId === data.items[i-1].id)
+            {
+                vidVotes =playlistRaw[p].vote;
+            }
         }
         
         var vid = data.items[i-1];
@@ -215,7 +218,7 @@ function addSongs(data)
         playlist.push(newSong);
     }
     
-    console.log("playlist length:" +  playlist.length);
+    //console.log("playlist length:" +  playlist.length);
     // sort by votes
     playlist.sort(function(a,b){
         if(a.vote > b.vote){
@@ -316,7 +319,7 @@ function playNext()
 
 function queueNext()
 {
-    console.log("queueNext()");
+    //console.log("queueNext()");
     if (playlist.length > 0) {
         //change to get the highest rated current item in the playlist
         //get the highest rated song  
@@ -337,7 +340,7 @@ function HummUpdate()
     //initial load
     if(!initialLoad && player1Ready && player2Ready && playlistLoaded)
     {
-        console.log("all players ready. Initial load & play");
+        //console.log("all players ready. Initial load & play");
         initialLoad = true;
         queueNext();
         playNext();
@@ -353,7 +356,7 @@ function HummUpdate()
         
         if(currentTimeLeft < 31 && nextVideoLoaded===false)
         {
-            console.log("loading next song due as approaching end");
+            //console.log("loading next song due as approaching end");
             queueNext();
         }
         

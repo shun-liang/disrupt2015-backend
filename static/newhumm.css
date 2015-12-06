@@ -8,10 +8,16 @@ html, body
 #main-header
 {
 	width:100%;
-	height:40px;
-	background-color: #f1f1f1;
+	height:60px;
+	background-color: #222;
 }
-
+#logo-img
+{
+	display:block;
+	height:40px;
+	width:auto;
+	margin: 10px auto;
+}
 #playersContainer
 {
 	width:100%;
