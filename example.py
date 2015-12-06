@@ -16,7 +16,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
 
 class song(db.Model):
-    song_id = db.Column(db.String(20), unique=True)
+    song_id = db.Column(db.String(20), primary_key=True)
     name = db.Column(db.String(80))
     vote = db.Column(db.Integer)
     time = db.Column(db.DateTime)
