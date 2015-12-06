@@ -48,19 +48,19 @@ def find_top_songs(authorzation_token,artist_id):
 
 def top_songs_request(authorzation_token,message):
     #function that returns the top songs of an artist
-    try:
-        artist_id=find_artist_id(authorzation_token,message)
-        if artist_id != 'artist_not_found':
-            top_songs = find_top_songs(authorzation_token,artist_id)
-            print "top_songs: %s" % top_songs
-            return top_songs
+    #try:
+    artist_id=find_artist_id(authorzation_token,message)
+    if artist_id != 'artist_not_found':
+        top_songs = find_top_songs(authorzation_token,artist_id)
+        print "top_songs: %s" % top_songs
+        return top_songs
 
-            if top_songs == 'error: top list not found':
-                return 'error: top list not found'
-        else:
-            return 'error: artist_not_found'
-    except Exception, e:
-        print 'Exception: %s' % str(e)
+        if top_songs == 'error: top list not found':
+            return 'error: top list not found'
+    else:
+        return 'error: artist_not_found'
+    #except Exception, e:
+    #    print 'Exception: %s' % str(e)
         # client_id = '5662fe97ae8c50fb338b4567'
         # client_secret = '903210cdd2cc74e4b2660d372c6d734f8d95e814069314d1c3cb784579ec5f7c'
         # grant_type = 'client_credentials'
