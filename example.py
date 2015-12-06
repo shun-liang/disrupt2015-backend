@@ -7,6 +7,7 @@ import json
 import sys
 import os
 import logging
+from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
@@ -46,8 +47,10 @@ def hello_monkey():
 
     top_songs = humm.top_songs_request(at, msg_body)
 
-    #for song in top_songs:
-
+    for song_name in top_songs.keys():
+        song = Song(top_songs[song_name], song_name, 3, datetime.now())
+        db.session.add(song)
+    db.session.commit()
 
     resp = twilio.twiml.Response()
 
