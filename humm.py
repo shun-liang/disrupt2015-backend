@@ -32,6 +32,7 @@ def find_top_songs(authorzation_token,artist_id):
                                     "X-Mashape-Key": "m78ha7jd57msh8cdt9qLh4maGu8dp1DhHlljsnzcpHjUoYYnLJ",
                                     "Accept": "application/json"})
     
+    print "response code: %s" % response.code
     if response.code == 204:
         return 'error: top list not found'
     else:
