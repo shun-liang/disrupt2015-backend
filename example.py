@@ -86,7 +86,7 @@ def all_songs():
         timestamp = "2015/10/12 12:12:12"
         song_obj = {
             'song': song_name,
-            'video_id': video_id,
+            'videoId': video_id,
             'vote': vote,
             'time': timestamp,
         }
