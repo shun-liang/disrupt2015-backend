@@ -53,7 +53,19 @@ def all_songs():
     at = humm.find_authorzation_token(client_id,client_secret,grant_type)
 
     top_songs = humm.top_songs_request(at, "madonna")
-    return jsonify(top_songs)
+    top_songs_serialized = []
+    for song_name in top_songs.keys():
+        video_id = top_songs[song_name]
+        vote = 3
+        timestamp = "2015/10/12 12:12:12"
+        json_obj = {
+            'song': song_name,
+            'video_id': video_id,
+            'vote': vote,
+            'time': timestamp,
+        }
+        top_songs_serialized.append(json_obj)
+    return jsonify({playlist: top_songs_serialized})
 
 
 if __name__ == '__main__':
