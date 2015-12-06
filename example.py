@@ -103,6 +103,7 @@ def all_songs():
         song_obj = {
             'song': song_name,
             'videoId': video_id,
+            'id': video_id,
             'vote': vote,
             'time': timestamp,
         }
