@@ -18,7 +18,7 @@ db = SQLAlchemy(app)
 
 class Song(db.Model):
     song_id = db.Column(db.String(20), primary_key=True)
-    name = db.Column(db.String(80))
+    name = db.Column(db.String(200))
     vote = db.Column(db.Integer)
     time = db.Column(db.DateTime)
 
