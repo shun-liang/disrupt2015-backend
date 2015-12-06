@@ -5,6 +5,7 @@ from flask.ext.cors import CORS
 import twilio.twiml
 import json
 import sys
+import os
 import logging
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
