@@ -1,12 +1,33 @@
 import humm
 from flask import Flask, request, redirect, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask.ext.cors import CORS
 import twilio.twiml
 import json
 import sys
 import logging
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
+
+db = SQLAlchemy(app)
+
+class song(db.Model):
+    song_id = db.Column(db.String(20), unique=True)
+    name = db.Column(db.String(80))
+    vote = db.Column(db.Integer)
+    time = db.Column(db.DateTime)
+
+    def __init__(self, song_id, name, vote, time):
+        self.song_id = song_id
+        self.name = name
+        self.vote = vote
+        self.time = time
+
+    def __repr__(self):
+        return '<Song %s>' % self.song_name
+
 
 @app.route("/", methods = ['GET', 'POST'])
 
@@ -22,6 +43,9 @@ def hello_monkey():
     at = humm.find_authorzation_token(client_id,client_secret,grant_type)
 
     top_songs = humm.top_songs_request(at, msg_body)
+
+    #for song in top_songs:
+
 
     resp = twilio.twiml.Response()
 
@@ -41,6 +65,7 @@ def hello_monkey():
     return jsonify({})
 
 @app.route("/api/all_songs", methods = ['GET'])
+@cross_origin()
 def all_songs():
     msg_body = request.values.get('Body', None)
     msg_from = request.values.get('From', None)
