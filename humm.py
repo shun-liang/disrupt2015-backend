@@ -51,7 +51,7 @@ def top_songs_request(authorzation_token,message):
     #function that returns the top songs of an artist
     #try:
     artist_id=find_artist_id(authorzation_token,message)
-    if artist_id != 'artist_not_found':
+    if artist_id != 'error: artist_not_found':
         top_songs = find_top_songs(authorzation_token,artist_id)
 
         if top_songs == 'error: top list not found':
