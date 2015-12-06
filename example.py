@@ -29,7 +29,7 @@ class Song(db.Model):
         self.time = time
 
     def __repr__(self):
-        return '<Song %s>' % self.name
+        return '<Song name: %s vote: %s>' % self.name, self.vote
 
 
 @app.route("/", methods = ['GET', 'POST'])
@@ -48,8 +48,12 @@ def hello_monkey():
     top_songs = humm.top_songs_request(at, msg_body)
 
     for song_name in top_songs.keys():
-        song = Song(top_songs[song_name], song_name, 3, datetime.now())
-        db.session.add(song)
+        song = Song.query.get(top_songs[song_name])
+        if song:
+            song.vote += 1
+        else:
+            song = Song(top_songs[song_name], song_name, 1, datetime.now())
+            db.session.add(song)
     db.session.commit()
 
     resp = twilio.twiml.Response()
