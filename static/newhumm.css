@@ -2,6 +2,7 @@ html, body
 {
 	width:100%;
 	height:100%;
+	background-color:#000;
 }
 
 #main-header
@@ -113,6 +114,7 @@ html, body
 	justify-content: space-between;
 	align-content: stretch;
 	align-items: stretch;
+	background-color:#000;
 }
 #queue-container
 {
@@ -124,7 +126,7 @@ html, body
 
 #players-container
 {
-	flex: 1 0 600px;
+	flex: 0 0 660px;
 	position:relative;
 	background-color:black;
 }
@@ -141,5 +143,43 @@ html, body
 	height:200px;
 	display:block;
 	margin:20px auto;
-	background-color:blue;
+}
+
+
+/* D3 */
+.background {
+    fill: #FFFFFF;
+    fill-opacity: 0.01;
+}
+
+.component {
+    fill: #e1e1e1;
+}
+
+.component .label {
+    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+    fill: #0000FF;
+}
+
+.arc {
+    stroke-weight:0.1;
+    fill: #4e8fff;
+}
+
+
+.arc2 {
+    stroke-weight:0.1;
+    fill: #3660b0;
+}
+
+
+.label {
+    font-family:  Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+}
+
+.radial-svg {
+    display: block;
+    margin: 0 auto;
 }

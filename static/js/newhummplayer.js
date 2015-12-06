@@ -39,6 +39,10 @@ var nextPlayer;
 var currentTimeLeft = 0;
 var nextVideoLoaded = false;
 var playlistLoaded = false;
+var el_timer;
+var d3Timer;
+//last player status. used to play next if not loaded
+var lastStatus = 0;
                  
 // onload
 window.addEventListener("load",function load(event){
@@ -48,6 +52,7 @@ window.addEventListener("load",function load(event){
     loadPlaylistRaw();
     //convertPlaylist();
     window.setInterval(HummUpdate,1000);
+    window.setInterval(loadPlaylistRaw,10000);
 });
 
 
@@ -60,7 +65,10 @@ function initialize()
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); 
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+    //load the timer div
+    d3Timer = radialProgress(document.getElementById('timer-container')).label("Count Down").diameter(200).value(120).render();
 }
 
 function onYouTubeIframeAPIReady() {
@@ -334,12 +342,14 @@ function HummUpdate()
         queueNext();
         playNext();
         //play first video
+        
     }
     
     if(initialLoad && currentPlayer.getPlayerState() === 1 )
     {
         //console.log("Song time: " + currentPlayer.getCurrentTime() + "/" + current.duration);
         currentTimeLeft = current.duration - currentPlayer.getCurrentTime();
+        d3Timer.value(currentTimeLeft).render();
         if(currentTimeLeft < 31 && !nextVideoLoaded){
             queueNext();
         }
@@ -352,6 +362,7 @@ function HummUpdate()
             playNext();
         }
     }
+    
     // update timeleft
     //currentPlayer.getPlayerState()
 }
