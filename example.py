@@ -15,20 +15,20 @@ app.logger.setLevel(logging.ERROR)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
 
-class song(db.Model):
-    song_id = db.Column(db.String(20), unique=True)
-    name = db.Column(db.String(80))
-    vote = db.Column(db.Integer)
-    time = db.Column(db.DateTime)
+# class song(db.Model):
+#     song_id = db.Column(db.String(20), unique=True)
+#     name = db.Column(db.String(80))
+#     vote = db.Column(db.Integer)
+#     time = db.Column(db.DateTime)
 
-    def __init__(self, song_id, name, vote, time):
-        self.song_id = song_id
-        self.name = name
-        self.vote = vote
-        self.time = time
+#     def __init__(self, song_id, name, vote, time):
+#         self.song_id = song_id
+#         self.name = name
+#         self.vote = vote
+#         self.time = time
 
-    def __repr__(self):
-        return '<Song %s>' % self.song_name
+#     def __repr__(self):
+#         return '<Song %s>' % self.song_name
 
 
 @app.route("/", methods = ['GET', 'POST'])
