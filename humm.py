@@ -13,7 +13,7 @@ def find_authorzation_token(client_id,client_secret,grant_type):
     return response.body['data_response']['access_token']
 
 def find_artist_id(authorzation_token,artist):
-    string="https://humm-api.p.mashape.com/artists?auth="+authorzation_token+"&keyword="+artist+'&limit=1'
+    string="https://humm-api.p.mashape.com/artists?auth="+authorzation_token+"&keyword="+artist
     response = unirest.get(string,
                            headers={
                                     "X-Mashape-Key": "m78ha7jd57msh8cdt9qLh4maGu8dp1DhHlljsnzcpHjUoYYnLJ",
@@ -25,7 +25,7 @@ def find_artist_id(authorzation_token,artist):
         return response.body['data_response'][0]['_id']
 
 def find_top_songs(authorzation_token,artist_id):
-    string='https://humm-api.p.mashape.com/artists/'+artist_id+'/topsongs?auth='+authorzation_token+'&limit=3'
+    string='https://humm-api.p.mashape.com/artists/'+artist_id+'/topsongs?auth='+authorzation_token
     
     response = unirest.get(string,
                            headers={
